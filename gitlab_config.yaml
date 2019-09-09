@@ -1,0 +1,40 @@
+# Minimal settings
+global:
+  edition: ce
+  ingress:
+    configureCertmanager: false
+    tls:
+      enabled: false
+      secretName: k8s.xulei.app
+  hosts:
+    domain: k8s.xulei.app
+    https: true
+    gitlab:
+      https: false
+    registry:
+      https: false
+    minio:
+      https: false
+# Don't use certmanager, we'll self-sign
+certmanager:
+  install: false
+# Save resources, only 2 CPU
+prometheus:
+  install: false
+# GitLab Runner isn't a big fan of self-signed certificates
+gitlab-runner:
+  install: true
+# Reduce replica counts, reducing CPU & memory requirements
+gitlab:
+  unicorn:
+    minReplicas: 1
+    maxReplicas: 1
+  sidekiq:
+    minReplicas: 1
+    maxReplicas: 1
+  gitlab-shell:
+    minReplicas: 1
+    maxReplicas: 1
+registry:
+  minReplicas: 1
+  maxReplicas: 1
